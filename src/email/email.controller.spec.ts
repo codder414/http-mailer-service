@@ -15,7 +15,13 @@ describe('EmailController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      // expect(emailController.getHello()).toBe('Hello World!');
+      expect(
+        emailController.send({
+          body: 'Hello,World',
+          from: 'vasya@gmail.com',
+          subject: 'hi!',
+        }),
+      ).toBe({});
     });
   });
 });
