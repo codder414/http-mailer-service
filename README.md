@@ -1,5 +1,6 @@
+## Description:
 
-
+### Http mailer. Http->Smtp with redis queue (bull)
 ## Installation
 
 ```bash
