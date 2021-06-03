@@ -1,3 +1,5 @@
+
+
 ## Installation
 
 ```bash
@@ -37,4 +39,12 @@ SMTP_PORT=465
 REDIS_PORT=6379 # linked to docker-compose.yml
 REDIS_DB=0
 REDIS_HOST=redis # linked to docker-compose.yml
+```
+
+
+## Usage:
+```bash
+curl -H "Content-Type: application/json" \
+-H "x-idempotency-key: 2b810a13-8b14-4684-a78e-09dcee5f4dca" \
+-X POST -d '{"subject":"Hello,World!", "to":"<email_address>", "body": "ok" }' \ http://localhost:3000/mail
 ```
