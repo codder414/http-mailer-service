@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type MailDocument = Mail & Document;
+export type EMailDocument = EMail & Document;
 
 @Schema()
-export class Mail {
+export class EMail {
   @Prop()
   subject: string;
 
@@ -21,4 +21,4 @@ export class Mail {
   status: string;
 }
 
-export const CatSchema = SchemaFactory.createForClass(Mail);
+export const EMailSchema = SchemaFactory.createForClass(EMail);

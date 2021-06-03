@@ -1,14 +1,22 @@
-import { Controller, Post, Body, Headers, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Headers,
+  Res,
+  HttpException,
+} from '@nestjs/common';
 import { EmailService } from './email.service';
 import { SendEmailDto } from './send-mail.dto';
 import { Response } from 'express';
 import { isUUID } from 'class-validator';
+import { IdempotencyKeyExistsError } from './errors/idempotency.error';
 @Controller('mail')
 export class EmailController {
-  constructor(private readonly emailService: EmailService) {}
+  constructor(private emailService: EmailService) {}
 
   @Post('/')
-  send(
+  async send(
     @Body() sendEmailDto: SendEmailDto,
     @Headers('x-idempotency-key') idempotencyId,
     @Res() res: Response,
@@ -25,7 +33,7 @@ export class EmailController {
         code: 1,
       });
     }
-
-    return res.json({ msg: 'ok', code: 0 });
+    const result = await this.emailService.send(sendEmailDto);
+    return res.json(result);
   }
 }
