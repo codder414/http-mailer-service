@@ -1,5 +1,5 @@
 {
-  "name": "http-email-service-task",
+  "name": "http-mailer-service",
   "version": "0.0.1",
   "description": "Simple queue based email mailer based on NEST with config",
   "author": "nurik6@gmail.com",
