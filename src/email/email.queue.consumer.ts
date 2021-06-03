@@ -29,7 +29,7 @@ export class EmailConsumer {
         from: `"MailRobot" <${this.configService.get<string>('EMAIL_USER')}>`,
         to: job.data.to,
         subject: job.data.subject,
-        html: job.data.body, // plain text body
+        html: job.data.body,
       };
       this.logger.log({ emailMessage }, 'Data to send:');
       const info = await this.transporter.sendMail(emailMessage);
