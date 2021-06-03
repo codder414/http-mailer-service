@@ -8,6 +8,6 @@ export interface ResponseSuccess {
 
 export interface ResponseError {
   code: number;
-  msg: string;
+  msg: string | string[];
   path: string;
 }

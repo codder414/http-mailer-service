@@ -30,8 +30,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
       response.status(status).json({
         code: 1000,
         path: request.url,
-        msg: 'Internal Server Error',
-      });
+        msg: (<any>exception).response
+          ? (<any>exception).response?.message
+          : (<any>exception).message,
+      } as ResponseError);
     }
   }
 }

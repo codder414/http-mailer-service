@@ -9,16 +9,13 @@ export class EMail {
   subject: string;
 
   @Prop()
-  from: string;
+  to: string;
 
   @Prop()
   body: string;
 
   @Prop({ unique: true })
   idempotencyKey: string;
-
-  @Prop({ enum: ['processed', 'pending'] })
-  status: string;
 }
 
 export const EMailSchema = SchemaFactory.createForClass(EMail);

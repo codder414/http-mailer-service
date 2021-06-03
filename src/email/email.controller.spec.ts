@@ -18,7 +18,7 @@ describe('EmailController', () => {
       expect(
         emailController.send({
           body: 'Hello,World',
-          from: 'vasya@gmail.com',
+          to: 'vasya@gmail.com',
           subject: 'hi!',
         }),
       ).toBe({});

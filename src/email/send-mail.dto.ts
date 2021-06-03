@@ -12,7 +12,7 @@ export class SendEmailDto {
 
   @IsNotEmpty()
   @IsEmail()
-  from: string;
+  to: string;
 
   @IsNotEmpty()
   @MinLength(1)

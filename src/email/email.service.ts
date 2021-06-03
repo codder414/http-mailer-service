@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SendEmailDto } from './send-mail.dto';
+import { SaveEmailDto } from './save-email.dto';
 import { EMail, EMailDocument } from './email.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -18,17 +19,24 @@ export class EmailService {
 
   async send(
     mailData: SendEmailDto,
-  ): Promise<{ code: 0; msg: 'ok' } | { code: 1; msg: string }> {
-    const mongoLogData = await this.persistMail(mailData);
-    const queueLogData = await this.sendToQueue(mailData);
+    idempotencyKey: string,
+  ): Promise<{ code: 0; msg: 'ok' }> {
+    const mongoLogData = await this.persistMail({
+      ...mailData,
+      idempotencyKey,
+    });
+    const queueLogData = await this.sendToQueue({
+      ...mailData,
+      idempotencyKey,
+    });
 
-    this.logger.log(mongoLogData);
-    this.logger.log(queueLogData);
+    this.logger.log(mongoLogData, 'Saved:');
+    this.logger.log(queueLogData.data, 'Enqueued:');
 
     return { code: 0, msg: 'ok' };
   }
 
-  private async persistMail(mailData: SendEmailDto): Promise<EMail> {
+  private async persistMail(mailData: SaveEmailDto): Promise<EMail> {
     try {
       const createdMail = new this.mailModel(mailData);
       const email = await createdMail.save();
@@ -41,7 +49,7 @@ export class EmailService {
     }
   }
 
-  private async sendToQueue(mailData: SendEmailDto): Promise<any> {
+  private async sendToQueue(mailData: SaveEmailDto): Promise<any> {
     const sendTask = await this.mailsQueue.add(mailData);
     return sendTask;
   }

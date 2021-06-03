@@ -1,16 +1,8 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Headers,
-  Res,
-  HttpException,
-} from '@nestjs/common';
+import { Controller, Post, Body, Headers, Res } from '@nestjs/common';
 import { EmailService } from './email.service';
 import { SendEmailDto } from './send-mail.dto';
 import { Response } from 'express';
 import { isUUID } from 'class-validator';
-import { IdempotencyKeyExistsError } from './errors/idempotency.error';
 @Controller('mail')
 export class EmailController {
   constructor(private emailService: EmailService) {}
@@ -33,7 +25,7 @@ export class EmailController {
         code: 1,
       });
     }
-    const result = await this.emailService.send(sendEmailDto);
+    const result = await this.emailService.send(sendEmailDto, idempotencyId);
     return res.json(result);
   }
 }
