@@ -1,10 +1,10 @@
 {
   "name": "http-email-service-task",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Simple queue based email mailer based on NEST with config",
+  "author": "nurik6@gmail.com",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
